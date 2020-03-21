@@ -118,7 +118,8 @@ export class OptionList {
             this.options.forEach((option) => {
                 let l: string = Diacritics.strip(option.label).toUpperCase();
                 let t: string = Diacritics.strip(term).toUpperCase();
-                option.shown = l.indexOf(t) > -1;
+//                option.shown = l.indexOf(t) > -1;
+                option.shown = this.findPalabraClave (t, l);
 
                 if (option.shown) {
                     anyShown = true;
@@ -132,6 +133,23 @@ export class OptionList {
 
         return anyShown;
     }
+
+    private findPalabraClave (query, nombre) {
+  
+        const palabrasClave = query.trim()
+        const palabrasList = palabrasClave.split(' ')
+      
+        let finded = true
+        palabrasList.forEach(function (palabra) {
+          const reg = new RegExp( palabra)
+          if (!nombre.match(reg)) {
+            finded = false
+          }
+        })
+  
+        return finded
+      }
+  
 
     private resetFilter() {
         this.options.forEach((option) => {
